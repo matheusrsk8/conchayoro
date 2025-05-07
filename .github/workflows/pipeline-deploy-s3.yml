@@ -30,6 +30,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: site
-          path: ./site
-      - run: ls -la ./site
-      - run: aws s3 cp ./site/index.html s3://$BUCKET_S3/index.html --acl public-read
+          path: site-artifact
+      - run: ls -la site-artifact
+      - run: aws sts get-caller-identity
+      - run: aws s3 cp site-artifact/index.html s3://$BUCKET_S3/index.html --acl public-read
