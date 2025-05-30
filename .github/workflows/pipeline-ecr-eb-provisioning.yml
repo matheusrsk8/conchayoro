@@ -11,7 +11,7 @@ env:
   AWS_REGION: ${{ vars.AWS_REGION }}
   PROJECT_NAME: ${{ vars.PROJECT_NAME }}
   MODULE_NAME: ${{ vars.MODULE_NAME }}
-  S3_BUCKET: ${{ vars.S3_BUCKET }}
+  S3_BUCKET: ${{ vars.BUCKET_S3 }}
 
 jobs:
   provisioning:
