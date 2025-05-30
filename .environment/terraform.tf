@@ -1,15 +1,15 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
+      source = "hashicorp/aws"
       version = "~> 5.98"
     }
   }
 
   backend "s3" {
-    bucket  = ""
-    key     = ""
-    region  = ""
+    bucket = ""
+    key = ""
+    region = ""
     encrypt = true
   }
 
