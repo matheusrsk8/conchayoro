@@ -37,6 +37,26 @@ jobs:
             -backend-config="bucket=$TF_VAR_S3_BUCKET" \
             -backend-config="key=$TF_VAR_STATE_FILE"
 
+      - name: Terraform Import (if not in state)
+        run: |
+          set -e
+          cd $TF_VAR_WORKING_DIR
+
+          # ECR
+          if ! terraform state show aws_ecr_repository.cyo_ecr_repo > /dev/null 2>&1; then
+            terraform import aws_ecr_repository.cyo_ecr_repo "${PROJECT_NAME}/${MODULE_NAME}"
+          fi
+
+          # Elastic Beanstalk Application
+          if ! terraform state show aws_elastic_beanstalk_application.cyo_eba > /dev/null 2>&1; then
+            terraform import aws_elastic_beanstalk_application.cyo_eba "${PROJECT_NAME}"
+          fi
+
+          # Elastic Beanstalk Environment
+          if ! terraform state show aws_elastic_beanstalk_environment.cyo_ebef > /dev/null 2>&1; then
+            terraform import aws_elastic_beanstalk_environment.cyo_ebef "${MODULE_NAME}"
+          fi
+
       - name: Terraform Plan
         run: |
           terraform -chdir=$TF_VAR_WORKING_DIR plan \
