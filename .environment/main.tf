@@ -25,7 +25,7 @@ resource "aws_elastic_beanstalk_application" "cyo_eba" {
 resource "aws_elastic_beanstalk_environment" "cyo_ebef" {
   name                = var.MODULE_NAME
   application         = aws_elastic_beanstalk_application.cyo_eba.name
-  solution_stack_name = var.SOLUTION_STACK_NAME
+  solution_stack_name = "64bit Amazon Linux 2 v3.4.10 running Docker"
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
