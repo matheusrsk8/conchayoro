@@ -11,7 +11,7 @@ env:
   AWS_REGION: ${{ vars.AWS_REGION }}
   PROJECT_NAME: ${{ vars.PROJECT_NAME }}
   MODULE_NAME: ${{ vars.MODULE_NAME }}
-  S3_BUCKET: ${{ vars.S3_BUCKET }}
+  S3_BUCKET: ${{ vars.BUCKET_S3 }}
 
 jobs:
   provisioning:
@@ -20,7 +20,7 @@ jobs:
       TF_VAR_AWS_REGION: ${{ vars.AWS_REGION }}
       TF_VAR_PROJECT_NAME: ${{ vars.PROJECT_NAME }}
       TF_VAR_MODULE_NAME: ${{ vars.MODULE_NAME }}
-      TF_VAR_S3_BUCKET: ${{ vars.S3_BUCKET }}
+      TF_VAR_S3_BUCKET: ${{ vars.BUCKET_S3 }}
       TF_VAR_SOLUTION_STACK_NAME: ${{ vars.STACK_NAME }}
       TF_VAR_WORKING_DIR: ".environment"
       TF_VAR_PLAN_FILE: "planfile"
@@ -34,7 +34,7 @@ jobs:
       - name: Terraform Init
         run: |
           terraform -chdir=$TF_VAR_WORKING_DIR init \
-            -backend-config="bucket=$S3_BUCKET" \
+            -backend-config="bucket=$BUCKET_S3" \
             -backend-config="key=$TF_VAR_STATE_FILE"
 
       - name: Terraform Plan
