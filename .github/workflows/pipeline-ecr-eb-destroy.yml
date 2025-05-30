@@ -1,4 +1,4 @@
-name: destroy ecr-eb
+name: destroy-infrastructure
 
 on:
   workflow_dispatch:
@@ -7,7 +7,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_REGION: ${{ vars.AWS_REGION }}
   PROJECT_NAME: ${{ vars.PROJECT_NAME }}
   MODULE_NAME: ${{ vars.MODULE_NAME }}
@@ -23,7 +22,6 @@ jobs:
       TF_VAR_S3_BUCKET: ${{ vars.BUCKET_S3 }}
       TF_VAR_SOLUTION_STACK_NAME: ${{ vars.STACK_NAME }}
       TF_VAR_WORKING_DIR: ".environment"
-      TF_VAR_PLAN_FILE: "planfile"
       TF_VAR_STATE_FILE: "state/terraform.tfstate"
 
     steps:
@@ -34,10 +32,9 @@ jobs:
       - name: Terraform Init
         run: |
           terraform -chdir=$TF_VAR_WORKING_DIR init \
-            -backend-config="bucket=$BUCKET_S3" \
+            -backend-config="bucket=$TF_VAR_S3_BUCKET" \
             -backend-config="key=$TF_VAR_STATE_FILE"
 
       - name: Terraform Destroy
         run: |
-          terraform -chdir=$TF_VAR_WORKING_DIR destroy \
-            -auto-approve
+          terraform -chdir=$TF_VAR_WORKING_DIR destroy -auto-approve
