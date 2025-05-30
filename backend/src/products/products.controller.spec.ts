@@ -77,6 +77,18 @@ it('should return a specific product', async () => {
     .mockImplementation(() => Promise.resolve(mockedResponseData));
   expect(await productsController.findOne(id)).toBe(mockedResponseData);
 });
+it('should return an array of products by criteria', async () => {
+  const mockedResponseData = [];
+  const criteria = { id: '1' };
+  jest
+    .spyOn(productsService, 'findByCriteria')
+    .mockImplementation(() =>
+      Promise.resolve(mockedResponseData));
+  expect(await
+    productsController.findByCriteria(criteria)).toBe(
+      mockedResponseData,
+    );
+});
 });
 
 
