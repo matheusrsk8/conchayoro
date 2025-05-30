@@ -54,7 +54,7 @@ jobs:
 
           # Elastic Beanstalk Environment
           if ! terraform state show aws_elastic_beanstalk_environment.cyo_ebef > /dev/null 2>&1; then
-            terraform import aws_elastic_beanstalk_environment.cyo_ebef "${MODULE_NAME}"
+            terraform import aws_elastic_beanstalk_environment.cyo_ebef "e-h3q33aqsij"
           fi
 
       - name: Terraform Plan
